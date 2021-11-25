@@ -1,8 +1,10 @@
 name: .NET
 
 on:
-  push:
-    branches: [ main ]
+  #push:
+  #  branches: [ main ]
+  # Disable action until fixed this problem of COM Reference disabled in Github Action machine.
+  # "No pr,yet?"
   pull_request:
     branches: [ main ]
 
