@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "a5AjItdreRpkbb7KoArkijYbJJMnzHW23AkPrVdsdVQK9KZoMkGaXbK/I1lm+i2DK5DJ9kq0PdkH5Xgl6OIxRA==",
+  "dgSpecHash": "rGVU5pPCHauS1aVgrj+ESpRi2HUoo8YKbAvEhfU/SGEcI724wrC2FxKCtndJs9+1K8xKQv0EuGmG+f2gSaMHcA==",
   "success": true,
   "projectFilePath": "D:\\Program Source\\Aesc.AwesomeKits\\Aesc.AwesomeKits\\Aesc.AwesomeKits.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\44319\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512"
+  ],
   "logs": []
 }

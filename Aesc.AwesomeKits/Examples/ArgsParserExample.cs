@@ -5,7 +5,9 @@ namespace Aesc.AwesomeKits.Examples
 {
     class ArgsParserExample
     {
-        static void Main(string[] args)
+        // If you want to test this program,
+        // Please rename this function to Main.
+        public static void ArgsParserExampleMain(string[] args)
         {
             Result result = AescArgsParser.Parse<Result>(args);
             Console.WriteLine(result.str);

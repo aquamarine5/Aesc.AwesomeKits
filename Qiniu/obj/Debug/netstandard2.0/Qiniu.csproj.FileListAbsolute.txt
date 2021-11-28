@@ -1,0 +1,9 @@
+C:\Users\44319\Downloads\csharp-sdk-8.0.0\src\Qiniu\bin\Debug\netstandard2.0\Qiniu.deps.json
+C:\Users\44319\Downloads\csharp-sdk-8.0.0\src\Qiniu\bin\Debug\netstandard2.0\Qiniu.dll
+C:\Users\44319\Downloads\csharp-sdk-8.0.0\src\Qiniu\bin\Debug\netstandard2.0\Qiniu.pdb
+C:\Users\44319\Downloads\csharp-sdk-8.0.0\src\Qiniu\obj\Debug\netstandard2.0\Qiniu.csprojAssemblyReference.cache
+C:\Users\44319\Downloads\csharp-sdk-8.0.0\src\Qiniu\obj\Debug\netstandard2.0\Qiniu.AssemblyInfoInputs.cache
+C:\Users\44319\Downloads\csharp-sdk-8.0.0\src\Qiniu\obj\Debug\netstandard2.0\Qiniu.AssemblyInfo.cs
+C:\Users\44319\Downloads\csharp-sdk-8.0.0\src\Qiniu\obj\Debug\netstandard2.0\Qiniu.csproj.CoreCompileInputs.cache
+C:\Users\44319\Downloads\csharp-sdk-8.0.0\src\Qiniu\obj\Debug\netstandard2.0\Qiniu.dll
+C:\Users\44319\Downloads\csharp-sdk-8.0.0\src\Qiniu\obj\Debug\netstandard2.0\Qiniu.pdb

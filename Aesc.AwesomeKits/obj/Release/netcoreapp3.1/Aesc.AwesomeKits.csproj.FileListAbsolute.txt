@@ -1,7 +1,4 @@
-D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\bin\Release\netcoreapp3.1\Aesc.AwesomeKits.exe
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\bin\Release\netcoreapp3.1\Aesc.AwesomeKits.deps.json
-D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\bin\Release\netcoreapp3.1\Aesc.AwesomeKits.runtimeconfig.json
-D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\bin\Release\netcoreapp3.1\Aesc.AwesomeKits.runtimeconfig.dev.json
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\bin\Release\netcoreapp3.1\Aesc.AwesomeKits.dll
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\bin\Release\netcoreapp3.1\Aesc.AwesomeKits.pdb
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Release\netcoreapp3.1\Aesc.AwesomeKits.AssemblyInfoInputs.cache
@@ -9,4 +6,10 @@ D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Release\netcoreapp3.1\Ae
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Release\netcoreapp3.1\Aesc.AwesomeKits.csproj.CoreCompileInputs.cache
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Release\netcoreapp3.1\Aesc.AwesomeKits.dll
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Release\netcoreapp3.1\Aesc.AwesomeKits.pdb
-D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Release\netcoreapp3.1\Aesc.AwesomeKits.genruntimeconfig.cache
+D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\bin\Release\netcoreapp3.1\Qiniu.dll
+D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\bin\Release\netcoreapp3.1\Qiniu.pdb
+D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\bin\Release\netcoreapp3.1\Interop.TaskScheduler.dll
+D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Release\netcoreapp3.1\Aesc.AwesomeKits.csprojAssemblyReference.cache
+D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Release\netcoreapp3.1\Interop.TaskScheduler.dll
+D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Release\netcoreapp3.1\Aesc.AwesomeKits.csproj.ResolveComReference.cache
+D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Release\netcoreapp3.1\Aesc.AwesomeKits.csproj.CopyComplete
