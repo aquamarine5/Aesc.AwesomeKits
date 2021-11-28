@@ -23,7 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Qiniu\Qiniu.csproj" />
+    <Reference Include="Qiniu">
+      <HintPath>..\Libs\Qiniu.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
