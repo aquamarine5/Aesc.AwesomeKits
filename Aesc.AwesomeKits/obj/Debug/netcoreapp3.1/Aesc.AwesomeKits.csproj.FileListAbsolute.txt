@@ -4,12 +4,10 @@ D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\bin\Debug\netcoreapp3.1\Aesc
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Debug\netcoreapp3.1\Aesc.AwesomeKits.csprojAssemblyReference.cache
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Debug\netcoreapp3.1\Aesc.AwesomeKits.AssemblyInfoInputs.cache
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Debug\netcoreapp3.1\Aesc.AwesomeKits.AssemblyInfo.cs
-D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Debug\netcoreapp3.1\Aesc.AwesomeKits.csproj.CoreCompileInputs.cache
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Debug\netcoreapp3.1\Aesc.AwesomeKits.dll
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Debug\netcoreapp3.1\Aesc.AwesomeKits.pdb
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\bin\Debug\netcoreapp3.1\Interop.TaskScheduler.dll
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Debug\netcoreapp3.1\Interop.TaskScheduler.dll
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Debug\netcoreapp3.1\Aesc.AwesomeKits.csproj.ResolveComReference.cache
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\bin\Debug\netcoreapp3.1\Qiniu.dll
-D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\bin\Debug\netcoreapp3.1\Qiniu.pdb
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Debug\netcoreapp3.1\Aesc.AwesomeKits.csproj.CopyComplete

@@ -1,47 +1,71 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.IO;
 using System.Net;
+using System.Text;
 
-namespace Aesc.AwesomeKits.RxWebRequest
+namespace Aesc.AwesomeKits
 {
-    public static class AescWebRequest
+    public static class WebRequestLinq
     {
-        public static void RxGet(this WebRequest webRequest)
+        public static WebResponse SendGet(this HttpWebRequest webRequest)
         {
+            webRequest.Method = "GET";
+            return webRequest.GetResponse();
+        }
+        public static WebResponse SendPost(this HttpWebRequest webRequest, string body)
+        {
+            webRequest.Method = "POST";
+            var stream = webRequest.GetRequestStream();
+            var bytes = Encoding.UTF8.GetBytes(body);
+            stream.Write(bytes, 0, bytes.Length);
+            stream.Close();
+            webRequest.ContentLength = bytes.Length;
+            return webRequest.GetResponse();
+        }
+        public static WebResponse SendPostWithFile(this HttpWebRequest webRequest, string filePath, string key)
+        {
+            webRequest.Method = "POST";
+            var boundary = DateTime.Now.Ticks.ToString("x");
+            var startBoundary = Encoding.ASCII.GetBytes($"--{boundary}\r\n");
+            var endBoundary = Encoding.ASCII.GetBytes($"--{boundary}--\r\n");
+            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            webRequest.ContentType = $"multipart/form-data; boundary={boundary}";
+            var memoryStream = new MemoryStream();
+            var splitFileContent = Encoding.ASCII.GetBytes($"Content-Disposition: form-data; name=\"{key}\"; filename=\"{Path.GetFileName(filePath)}\"\r\n" +
+                    "Content-Type: application/octet-stream\r\n\r\n");
 
+            memoryStream.Write(startBoundary, 0, startBoundary.Length);
+            memoryStream.Write(splitFileContent, 0, splitFileContent.Length);
+            var fileBuffer = new byte[1024];
+            int totalSize = 0;
+            int size = fileStream.Read(fileBuffer, 0, fileBuffer.Length);
+            while (size > 0)
+            {
+                totalSize += size;
+                memoryStream.Write(fileBuffer, 0, size);
+                size = fileStream.Read(fileBuffer, 0, fileBuffer.Length);
+            }
+            memoryStream.Write(endBoundary, 0, endBoundary.Length);
+            webRequest.ContentLength = memoryStream.Length;
+            return webRequest.GetResponse();
         }
-        public static string WebRequestGet(string webUrl)
+
+    }
+    public static class WebResponseLinq
+    {
+        public static string ReadText(this WebResponse webResponse)
         {
-            HttpWebRequest webRequest = WebRequest.CreateHttp(webUrl);
-            webRequest.Method = "GET";
-            WebResponse webResponse = webRequest.GetResponse();
             StreamReader streamReader = new StreamReader(webResponse.GetResponseStream());
             string result = streamReader.ReadToEnd();
             streamReader.Close();
             return result;
         }
-        public static string WebRequestPut(string webUrl)
+        public static JObject ReadJsonObject(this WebResponse webResponse) => JObject.Parse(webResponse.ReadText());
+
+        public static void WriteToFile(this WebResponse webResponse, string filePath)
         {
-            HttpWebRequest webRequest = WebRequest.CreateHttp(webUrl);
-            webRequest.Method = "PUT";
-            //Hm_lvt_5583c41c8e3159d9302af01337fb1909=1636808565,1636857557,1638025387; Hm_lpvt_
-            //5583c41c8e3159d9302af01337fb1909=1638025390; cloudreve-session=MTYzODAyNTQwM3xOd3dBTkRORFZFTlRTVlZhUkU0eVNsWTFRMWRZTmt0YVJqSkhNMWxGTnpWUVVWaFFXRVpGVjFKUVRWTlpTVEl5UWt0T1ExUXpWMUU9fIUKCZjIKn0r1O59dVfggiZu_fObzFP5LbDFWENpPNKy; path_tmp=
-            webRequest.Headers[HttpRequestHeader.Cookie] =
-                "Hm_lvt_5583c41c8e3159d9302af01337fb1909=1636808565;" +
-                " path_tmp=; Hm_lpvt_5583c41c8e3159d9302af01337fb1909=1636808682;" +
-                " cloudreve-session=MTYzNjgwODY3N3xOd3dBTkVOTVExWklOVmhOVjBZeU5GZENVRFZQTmpaT1JrSlJTRWt6TTBkSlJqTkJTVVpOTkU5QlNGTlRUbGhEUms1Sk0wcEJUa0U9fKJqkrr6JiA-2auw6dbHvy4amMFvjYqvPfKpNin9WuVF";
-            WebResponse webResponse = webRequest.GetResponse();
-            StreamReader streamReader = new StreamReader(webResponse.GetResponseStream());
-            string result = streamReader.ReadToEnd();
-            streamReader.Close();
-            return result;
-        }
-        public static void WebRequestDownload(string webUrl, string filePath)
-        {
-            HttpWebRequest webRequest = WebRequest.CreateHttp(webUrl);
-            webRequest.Method = "GET";
-            WebResponse webResponce = webRequest.GetResponse();
-            Stream stream = webResponce.GetResponseStream();
+            Stream stream = webResponse.GetResponseStream();
             if (File.Exists(filePath))
                 File.Delete(filePath);
             Console.WriteLine(filePath);
@@ -57,6 +81,31 @@ namespace Aesc.AwesomeKits.RxWebRequest
             }
             fileStream.Flush();
             fileStream.Close();
+        }
+    }
+    public static class AescWebRequest
+    {
+        public static string WebRequestGet(string webUrl)
+        {
+            return WebRequest.CreateHttp(webUrl).SendGet().ReadText();
+
+        }
+        public static string WebRequestPut(string webUrl)
+        {
+            HttpWebRequest webRequest = WebRequest.CreateHttp(webUrl);
+            webRequest.Method = "PUT";
+            WebResponse webResponse = webRequest.GetResponse();
+            StreamReader streamReader = new StreamReader(webResponse.GetResponseStream());
+            string result = streamReader.ReadToEnd();
+            streamReader.Close();
+            return result;
+        }
+        public static void WebRequestDownload(string webUrl, string filePath)
+        {
+            HttpWebRequest webRequest = WebRequest.CreateHttp(webUrl);
+            webRequest.Method = "GET";
+            WebResponse webResponce = webRequest.GetResponse();
+            webResponce.WriteToFile(filePath);
         }
     }
 
