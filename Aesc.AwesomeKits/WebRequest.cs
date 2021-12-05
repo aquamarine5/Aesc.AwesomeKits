@@ -50,7 +50,15 @@ namespace Aesc.AwesomeKits
             webRequest.ContentLength = memoryStream.Length;
             return webRequest.GetResponse();
         }
-
+        public static WebResponse SendPut(this HttpWebRequest webRequest,string body)
+        {
+            webRequest.Method = "PUT";
+            if (body == "" || body == null)
+            {
+                
+            }
+            return webRequest.GetResponse();
+        }
     }
     public static class WebResponseLinq
     {
@@ -83,30 +91,4 @@ namespace Aesc.AwesomeKits
             fileStream.Close();
         }
     }
-    public static class AescWebRequest
-    {
-        public static string WebRequestGet(string webUrl)
-        {
-            return WebRequest.CreateHttp(webUrl).SendGet().ReadText();
-
-        }
-        public static string WebRequestPut(string webUrl)
-        {
-            HttpWebRequest webRequest = WebRequest.CreateHttp(webUrl);
-            webRequest.Method = "PUT";
-            WebResponse webResponse = webRequest.GetResponse();
-            StreamReader streamReader = new StreamReader(webResponse.GetResponseStream());
-            string result = streamReader.ReadToEnd();
-            streamReader.Close();
-            return result;
-        }
-        public static void WebRequestDownload(string webUrl, string filePath)
-        {
-            HttpWebRequest webRequest = WebRequest.CreateHttp(webUrl);
-            webRequest.Method = "GET";
-            WebResponse webResponce = webRequest.GetResponse();
-            webResponce.WriteToFile(filePath);
-        }
-    }
-
 }

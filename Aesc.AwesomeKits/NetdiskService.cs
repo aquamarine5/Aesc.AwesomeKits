@@ -9,7 +9,7 @@ using System.Net;
 using Newtonsoft.Json.Linq;
 
 namespace Aesc.AwesomeKits
-{ 
+{
     public interface IImageHost
     {
         public void Upload(string imageFilepath);
@@ -20,21 +20,22 @@ namespace Aesc.AwesomeKits
     }
     public interface INetdiskDownloader
     {
-        public void Download(string data,string filepath);
+        public void Download(string data, string filepath);
     }
     public class Huang111Netdisk : INetdiskDownloader
     {
-        public void Download(string key, string filepath)
-        {
-            throw new NotImplementedException();
-        }
+        public string ParseUrl(string key) =>
+            WebRequest.CreateHttp($"https://pan.huang1111.cn/api/v3/share/download/{key}").SendPut(null).ReadJsonObject()["data"].ToString();
+
+        public void Download(string key, string filepath) =>
+            WebRequest.CreateHttp(ParseUrl(key)).SendGet().WriteToFile(filepath);
     }
     public class SMMSImageHost : IImageHost
     {
         string token;
-        public SMMSImageHost(string username,string password)
+        public SMMSImageHost(string username, string password)
         {
-            token=WebRequest.CreateHttp("https://sm.ms/api/v2/token").SendPost(@$"username:{username}
+            token = WebRequest.CreateHttp("https://sm.ms/api/v2/token").SendPost(@$"username:{username}
 password: {password}").ReadJsonObject()["data"]["token"].ToString();
         }
         public void Upload(string imageFilepath)
@@ -46,28 +47,30 @@ password: {password}").ReadJsonObject()["data"]["token"].ToString();
             {
                 httpRequest.SendPostWithFile(imageFilepath, "smfile").ReadJsonObject();
             }
-            catch (WebException e){
+            catch (WebException e)
+            {
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.Status.ToString());
             }
         }
     }
-    public class QiniuNetdisk:INetdiskDownloader,INetdiskUploader
+    public class QiniuNetdisk : INetdiskDownloader, INetdiskUploader
     {
         Mac mac;
-        public QiniuNetdisk(string accessKey,string secretKey)
+        public QiniuNetdisk(string accessKey, string secretKey)
         {
             mac = new Mac(accessKey, secretKey);
         }
-        public void Download(string data,string filepath)
+        public void Download(string data, string filepath)
         {
 
         }
         public void Upload(string filename)
         {
-            Config config = new Config() { 
-                Zone=Zone.ZONE_CN_South,
-                UseCdnDomains=true
+            Config config = new Config()
+            {
+                Zone = Zone.ZONE_CN_South,
+                UseCdnDomains = true
             };
             UploadManager uploadManager = new UploadManager(config);
             PutPolicy putPolicy = new PutPolicy()
@@ -79,11 +82,11 @@ password: {password}").ReadJsonObject()["data"]["token"].ToString();
             PutExtra putExtra = new PutExtra()
             {
                 Version = "v2",
-                PartSize=4*1024*1024
+                PartSize = 4 * 1024 * 1024
             };
             Console.WriteLine(filename);
             Console.WriteLine(Path.GetFileName(filename));
-            var result=uploadManager.UploadFile(filename, Path.GetFileName(filename), token, putExtra);
+            var result = uploadManager.UploadFile(filename, Path.GetFileName(filename), token, putExtra);
             Console.WriteLine(result.Code);
         }
     }

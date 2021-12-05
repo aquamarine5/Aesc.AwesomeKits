@@ -9,17 +9,17 @@ namespace Aesc.AwesomeKits
 {
     public static class TriggerLinq
     {
-        public static IWeeklyTrigger Instance(this IWeeklyTrigger weeklyTrigger,int daysOfWeek,int weeklyInterval)
+        public static IWeeklyTrigger Instance(this IWeeklyTrigger weeklyTrigger, int daysOfWeek, int weeklyInterval)
         {
             weeklyTrigger.DaysOfWeek = (short)daysOfWeek;
             weeklyTrigger.WeeksInterval = (short)weeklyInterval;
             return weeklyTrigger;
         }
-        
+
     }
     public static class ActionLinq
     {
-        public static IExecAction Instance(this IExecAction execAction,string execPath,string argument=null,string workingPath=null)
+        public static IExecAction Instance(this IExecAction execAction, string execPath, string argument = null, string workingPath = null)
         {
             execAction.Arguments = argument;
             execAction.Path = execPath;
@@ -43,7 +43,7 @@ namespace Aesc.AwesomeKits
     {
         public AescTaskScheduler()
         {
-            
+
         }
         private static TaskSchedulerClass taskSchedulerClass;
         private static readonly Dictionary<Type, _TASK_TRIGGER_TYPE2> typeTriggerPairs = new Dictionary<Type, _TASK_TRIGGER_TYPE2>()
@@ -94,27 +94,6 @@ namespace Aesc.AwesomeKits
                 throw new ArgumentException();
             return value;
         }
-        /*
-        public static _TASK_STATE CreateTask(string taskPath, _TASK_TRIGGER_TYPE2 taskTriggerType, ITrigger triggerValue, DateTime dateTime, IRegistrationInfo registrationInfo = null)
-        {
-            return taskTriggerType switch
-            {
-                _TASK_TRIGGER_TYPE2.TASK_TRIGGER_EVENT => CreateTask<IEventTrigger>(taskPath, taskTriggerType,triggerValue, dateTime, registrationInfo),
-                _TASK_TRIGGER_TYPE2.TASK_TRIGGER_TIME => CreateTask<ITimeTrigger>(taskPath, taskTriggerType,triggerValue, dateTime, registrationInfo),
-                _TASK_TRIGGER_TYPE2.TASK_TRIGGER_DAILY => CreateTask<IDailyTrigger>(taskPath, taskTriggerType,triggerValue, dateTime, registrationInfo),
-                _TASK_TRIGGER_TYPE2.TASK_TRIGGER_WEEKLY => CreateTask<IWeeklyTrigger>(taskPath, taskTriggerType,triggerValue, dateTime, registrationInfo),
-                _TASK_TRIGGER_TYPE2.TASK_TRIGGER_MONTHLY => CreateTask<IMonthlyTrigger>(taskPath, taskTriggerType,triggerValue, dateTime, registrationInfo),
-                _TASK_TRIGGER_TYPE2.TASK_TRIGGER_MONTHLYDOW => CreateTask<IMonthlyDOWTrigger>(taskPath, taskTriggerType,triggerValue, dateTime, registrationInfo),
-                _TASK_TRIGGER_TYPE2.TASK_TRIGGER_IDLE => CreateTask<IIdleTrigger>(taskPath, taskTriggerType,triggerValue, dateTime, registrationInfo),
-                _TASK_TRIGGER_TYPE2.TASK_TRIGGER_REGISTRATION => CreateTask<IRegistrationTrigger>(taskPath, taskTriggerType,triggerValue, dateTime, registrationInfo),
-                _TASK_TRIGGER_TYPE2.TASK_TRIGGER_BOOT => CreateTask<IBootTrigger>(taskPath, taskTriggerType,triggerValue, dateTime, registrationInfo),
-                _TASK_TRIGGER_TYPE2.TASK_TRIGGER_LOGON => CreateTask<ILogonTrigger>(taskPath, taskTriggerType,triggerValue, dateTime, registrationInfo),
-                _TASK_TRIGGER_TYPE2.TASK_TRIGGER_SESSION_STATE_CHANGE => CreateTask<ISessionStateChangeTrigger>(taskPath, taskTriggerType,triggerValue, dateTime, registrationInfo),
-                
-                /// <seealso cref="_TASK_TRIGGER_TYPE2.TASK_TRIGGER_CUSTOM_TRIGGER_01"/>
-                _ => throw new ArgumentException() 
-            };
-        }*/
         /// <summary>
         /// 创建一个新的计划任务。<br/>
         /// 关于建立计划任务的操作方法：
@@ -126,14 +105,14 @@ namespace Aesc.AwesomeKits
         /// </summary>
         /// <seealso cref="SaveTask"/>
         /// <returns></returns>
-        public static ITaskDefinition CreateTask<TTrigger,TAction>
-            (out TTrigger trigger,out TAction action,IRegistrationInfo registrationInfo = null)
+        public static ITaskDefinition CreateTask<TTrigger, TAction>
+            (out TTrigger trigger, out TAction action, IRegistrationInfo registrationInfo = null)
             where TTrigger : ITrigger
-            where TAction:IAction
+            where TAction : IAction
         {
             TaskSchedulerClass taskScheduler = GetClass();
             ITaskDefinition task = taskScheduler.NewTask(0);
-            if(registrationInfo!=null) task.RegistrationInfo = registrationInfo;
+            if (registrationInfo != null) task.RegistrationInfo = registrationInfo;
             try
             {
                 trigger = (TTrigger)task.Triggers.Create(ParseTrigger<TTrigger>());
@@ -151,13 +130,13 @@ namespace Aesc.AwesomeKits
         /// 详情请见<see cref="CreateTask"/></b>
         /// </summary>
         /// <param name="task"></param>
-        public static IRegisteredTask SaveTask(string path,string taskName,ITaskDefinition task,bool isExistsUpdate=true)
+        public static IRegisteredTask SaveTask(string path, string taskName, ITaskDefinition task, bool isExistsUpdate = true)
         {
             var taskClass = GetClass();
             ITaskFolder folder = taskClass.GetFolder(path);
             IRegisteredTask registeredTask = folder.RegisterTaskDefinition
-                (taskName, task, 
-                (int)(isExistsUpdate ?_TASK_CREATION.TASK_CREATE_OR_UPDATE:_TASK_CREATION.TASK_CREATE),
+                (taskName, task,
+                (int)(isExistsUpdate ? _TASK_CREATION.TASK_CREATE_OR_UPDATE : _TASK_CREATION.TASK_CREATE),
                 null, null, _TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN);
             return registeredTask;
         }

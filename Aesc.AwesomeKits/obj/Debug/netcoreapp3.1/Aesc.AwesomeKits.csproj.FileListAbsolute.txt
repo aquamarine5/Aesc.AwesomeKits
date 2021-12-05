@@ -11,3 +11,4 @@ D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Debug\netcoreapp3.1\Inte
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Debug\netcoreapp3.1\Aesc.AwesomeKits.csproj.ResolveComReference.cache
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\bin\Debug\netcoreapp3.1\Qiniu.dll
 D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Debug\netcoreapp3.1\Aesc.AwesomeKits.csproj.CopyComplete
+D:\Program Source\Aesc.AwesomeKits\Aesc.AwesomeKits\obj\Debug\netcoreapp3.1\Aesc.AwesomeKits.csproj.CoreCompileInputs.cache

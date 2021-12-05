@@ -1,4 +1,4 @@
-﻿using Aesc.AwesomeKits.ArgsParser;
+﻿using Aesc.AwesomeKits;
 using System;
 #pragma warning disable 0649
 namespace Aesc.AwesomeKits.Examples

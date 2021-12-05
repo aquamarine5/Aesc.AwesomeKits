@@ -20,9 +20,9 @@ namespace Aesc.AwesomeKits
                 .SendGet().ReadJsonObject()["data"]["replies"].ToString());
             foreach (var replyJson in replyJsonArray)
             {
-                biliReplies.Add(new BiliReply() 
-                { 
-                    text=replyJson["content"]["message"].ToString()
+                biliReplies.Add(new BiliReply()
+                {
+                    text = replyJson["content"]["message"].ToString()
                 });
             }
         }

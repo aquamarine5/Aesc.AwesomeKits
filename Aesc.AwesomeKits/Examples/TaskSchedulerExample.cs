@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TaskScheduler;
-using Aesc.AwesomeKits.TaskScheduler;
+using Aesc.AwesomeKits;
 
 namespace Aesc.AwesomeKits.Examples
 {
