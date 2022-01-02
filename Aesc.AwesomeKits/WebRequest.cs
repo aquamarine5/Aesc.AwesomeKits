@@ -4,63 +4,76 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-namespace Aesc.AwesomeKits
+namespace Aesc.AwesomeKits.Net
 {
-    public static class WebRequestLinq
+    public static class WebRequestExtention
     {
-        public static WebResponse SendGet(this HttpWebRequest webRequest)
+        public static WebResponse SendGet(this HttpWebRequest webRequest) => webRequest.SendRequest("GET");
+        public static WebResponse SendPost(this HttpWebRequest webRequest, string body="") => webRequest.AddText(body).SendRequest("POST");
+        public static WebResponse SendPut(this HttpWebRequest webRequest, string body="") => webRequest.AddText(body).SendRequest("PUT");
+        public static WebResponse SendRequest(this HttpWebRequest webRequest,string method)
         {
-            webRequest.Method = "GET";
+            webRequest.Method = method;
             return webRequest.GetResponse();
         }
-        public static WebResponse SendPost(this HttpWebRequest webRequest, string body)
+    }
+    public static class WebRequestStreamExtention
+    {
+        public static HttpWebRequest AddText(this HttpWebRequest webRequest,string text,string encoding="UTF-8")
         {
-            webRequest.Method = "POST";
+            if (text == "") return webRequest;
             var stream = webRequest.GetRequestStream();
-            var bytes = Encoding.UTF8.GetBytes(body);
-            stream.Write(bytes, 0, bytes.Length);
-            stream.Close();
-            webRequest.ContentLength = bytes.Length;
-            return webRequest.GetResponse();
+            var bytes = Encoding.GetEncoding(encoding).GetBytes(text);
+            stream.Write(bytes);
+            return webRequest;
         }
-        public static WebResponse SendPostWithFile(this HttpWebRequest webRequest, string filePath, string key)
+        // TODO: 完善Formdata
+        public static HttpWebRequest AddFormdata(this HttpWebRequest webRequest,string filePath,string key)
         {
-            webRequest.Method = "POST";
             var boundary = DateTime.Now.Ticks.ToString("x");
             var startBoundary = Encoding.ASCII.GetBytes($"--{boundary}\r\n");
             var endBoundary = Encoding.ASCII.GetBytes($"--{boundary}--\r\n");
             var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             webRequest.ContentType = $"multipart/form-data; boundary={boundary}";
-            var memoryStream = new MemoryStream();
-            var splitFileContent = Encoding.ASCII.GetBytes($"Content-Disposition: form-data; name=\"{key}\"; filename=\"{Path.GetFileName(filePath)}\"\r\n" +
-                    "Content-Type: application/octet-stream\r\n\r\n");
-
-            memoryStream.Write(startBoundary, 0, startBoundary.Length);
-            memoryStream.Write(splitFileContent, 0, splitFileContent.Length);
+            var stream = webRequest.GetRequestStream();
+            var splitFileContent = Encoding.ASCII.GetBytes(
+                $"Content-Disposition: form-data; name=\"{key}\"; filename=\"{Path.GetFileName(filePath)}\"\r\n" +
+                "Content-Type: application/octet-stream\r\n\r\n");
+            stream.Write(startBoundary, 0, startBoundary.Length);
+            stream.Write(splitFileContent, 0, splitFileContent.Length);
             var fileBuffer = new byte[1024];
             int totalSize = 0;
             int size = fileStream.Read(fileBuffer, 0, fileBuffer.Length);
             while (size > 0)
             {
                 totalSize += size;
-                memoryStream.Write(fileBuffer, 0, size);
+                stream.Write(fileBuffer, 0, size);
                 size = fileStream.Read(fileBuffer, 0, fileBuffer.Length);
             }
-            memoryStream.Write(endBoundary, 0, endBoundary.Length);
-            webRequest.ContentLength = memoryStream.Length;
-            return webRequest.GetResponse();
+            stream.Write(endBoundary, 0, endBoundary.Length);
+            webRequest.ContentLength = stream.Length;
+            return webRequest;
         }
-        public static WebResponse SendPut(this HttpWebRequest webRequest,string body)
+        public static HttpWebRequest AddFile(this HttpWebRequest webRequest,string filePath)
         {
-            webRequest.Method = "PUT";
-            if (body == "" || body == null)
+            var file = new FileInfo(filePath);
+            webRequest.ContentLength = file.Length;
+            var stream = webRequest.GetRequestStream();
+            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            var fileBuffer = new byte[1024];
+            int totalSize = 0;
+            int size = fileStream.Read(fileBuffer, 0, fileBuffer.Length);
+            while (size > 0)
             {
-                
+                totalSize += size;
+                stream.Write(fileBuffer, 0, size);
+                size = fileStream.Read(fileBuffer, 0, fileBuffer.Length);
             }
-            return webRequest.GetResponse();
+            fileStream.Close();
+            return webRequest;
         }
     }
-    public static class WebResponseLinq
+    public static class WebResponseExtention
     {
         public static string ReadText(this WebResponse webResponse)
         {

@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 using TaskScheduler;
-using Aesc.AwesomeKits;
+using Aesc.AwesomeKits.ComUtil;
 
 namespace Aesc.AwesomeKits.Examples
 {
     class TaskSchedulerExample
     {
-        public static void lMain(string[] args)
+        /// <summary>
+        /// <i>If you want to test this method, please rename this function to "Main"</i><br/><br/>
+        /// Seealso: <seealso cref="AescTaskScheduler"/>
+        /// </summary>
+        public static void TaskSchedulerMain(string[] args)
         {
             Console.WriteLine(args.Length);
             Console.WriteLine(args[0]);

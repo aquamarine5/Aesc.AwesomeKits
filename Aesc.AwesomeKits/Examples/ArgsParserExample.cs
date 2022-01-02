@@ -1,12 +1,14 @@
-﻿using Aesc.AwesomeKits;
+﻿using Aesc.AwesomeKits.Util;
 using System;
 #pragma warning disable 0649
 namespace Aesc.AwesomeKits.Examples
 {
     class ArgsParserExample
     {
-        // If you want to test this program,
-        // Please rename this function to Main.
+        /// <summary>
+        /// <i>If you want to test this method, please rename this function to "Main"</i><br/><br/>
+        /// Seealso: <seealso cref="AescArgsParser"/>
+        /// </summary>
         public static void ArgsParserExampleMain(string[] args)
         {
             Result result = AescArgsParser.Parse<Result>(args);
@@ -19,7 +21,6 @@ namespace Aesc.AwesomeKits.Examples
         }
         public struct Result : IArgsParseResult
         {
-
             public string str;
             public int inputInt;
             public float testFloat;

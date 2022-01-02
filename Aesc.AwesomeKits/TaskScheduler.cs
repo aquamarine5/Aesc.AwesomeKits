@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using TaskScheduler;
 
-namespace Aesc.AwesomeKits
+namespace Aesc.AwesomeKits.ComUtil
 {
     public static class TriggerLinq
     {
