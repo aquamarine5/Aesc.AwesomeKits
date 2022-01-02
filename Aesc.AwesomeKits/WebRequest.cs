@@ -19,6 +19,16 @@ namespace Aesc.AwesomeKits.Net
     }
     public static class WebRequestStreamExtention
     {
+        public static HttpWebRequest SetPut(this HttpWebRequest webRequest)
+        {
+            webRequest.Method = "PUT";
+            return webRequest;
+        }
+        public static HttpWebRequest SetPost(this HttpWebRequest webRequest)
+        {
+            webRequest.Method = "POST";
+            return webRequest;
+        }
         public static HttpWebRequest AddText(this HttpWebRequest webRequest,string text,string encoding="UTF-8")
         {
             if (text == "") return webRequest;
@@ -31,14 +41,14 @@ namespace Aesc.AwesomeKits.Net
         public static HttpWebRequest AddFormdata(this HttpWebRequest webRequest,string filePath,string key)
         {
             var boundary = DateTime.Now.Ticks.ToString("x");
-            var startBoundary = Encoding.ASCII.GetBytes($"--{boundary}\r\n");
-            var endBoundary = Encoding.ASCII.GetBytes($"--{boundary}--\r\n");
+            var startBoundary = Encoding.UTF8.GetBytes($"--{boundary}\r\n");
+            var endBoundary = Encoding.UTF8.GetBytes($"--{boundary}--\r\n");
             var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             webRequest.ContentType = $"multipart/form-data; boundary={boundary}";
-            var stream = webRequest.GetRequestStream();
-            var splitFileContent = Encoding.ASCII.GetBytes(
+            var stream = new MemoryStream();
+            var splitFileContent = Encoding.UTF8.GetBytes(
                 $"Content-Disposition: form-data; name=\"{key}\"; filename=\"{Path.GetFileName(filePath)}\"\r\n" +
-                "Content-Type: application/octet-stream\r\n\r\n");
+                "Content-Type: image/png\r\n\r\n");
             stream.Write(startBoundary, 0, startBoundary.Length);
             stream.Write(splitFileContent, 0, splitFileContent.Length);
             var fileBuffer = new byte[1024];
@@ -52,6 +62,7 @@ namespace Aesc.AwesomeKits.Net
             }
             stream.Write(endBoundary, 0, endBoundary.Length);
             webRequest.ContentLength = stream.Length;
+            stream.CopyTo(webRequest.GetRequestStream());
             return webRequest;
         }
         public static HttpWebRequest AddFile(this HttpWebRequest webRequest,string filePath)

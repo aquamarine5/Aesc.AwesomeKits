@@ -28,8 +28,15 @@ namespace Aesc.AwesomeKits.Net.WebStorage
     }
     public class Huang1111Netdisk : INetdiskDownloader,INetdiskUploader
     {
+        string cookies="";
+        public Huang1111Netdisk() { }
+        public Huang1111Netdisk(string cookies)
+        {
+            this.cookies = cookies;
+        }
         public string GetCookies()
         {
+            if (cookies != "") return cookies;
             BiliCommitMsgPvder biliCommit = new BiliCommitMsgPvder("610967597602910149");
             return biliCommit.biliReplies[0].text;
         }
@@ -59,8 +66,7 @@ namespace Aesc.AwesomeKits.Net.WebStorage
                 postWebRequest.Referer = "https://pan.huang1111.cn/home?path=%2F";
                 postWebRequest.UserAgent = defaultUserAgent;
                 postWebRequest.ContentType = "application/octet-stream";
-                postWebRequest.Method = "POST";
-                string uploadResponce = postWebRequest.AddFile(filename).SendPost().ReadText();
+                string uploadResponce = postWebRequest.SetPost().AddFile(filename).SendPost().ReadText();
                 Console.WriteLine(uploadResponce);
             }
             else
@@ -70,15 +76,13 @@ namespace Aesc.AwesomeKits.Net.WebStorage
                 putWebRequest.ContentType = "application/octet-stream";
                 putWebRequest.UserAgent = defaultUserAgent;
                 putWebRequest.Headers[HttpRequestHeader.ContentRange] = $"bytes 0-{file.Length - 1}/{file.Length}";
-                putWebRequest.Method = "PUT";
-                string uploadResponce = putWebRequest.AddFile(filename).SendPut().ReadText();
+                string uploadResponce = putWebRequest.SetPut().AddFile(filename).SendPut().ReadText();
                 var finishWebRequest = WebRequest.CreateHttp(credentialResponce["token"].ToString());
                 finishWebRequest.UserAgent = defaultUserAgent;
                 finishWebRequest.ContentType = "text/plain;charset=UTF-8";
                 finishWebRequest.Headers[HttpRequestHeader.Cookie] = cookies;
                 finishWebRequest.Referer = "https://pan.huang1111.cn/home?path=%2F";
-                finishWebRequest.Method = "POST";
-                var finishResponce = finishWebRequest.AddText(uploadResponce).SendPost().ReadJsonObject();
+                var finishResponce = finishWebRequest.SetPost().AddText(uploadResponce).SendPost().ReadJsonObject();
                 Console.WriteLine(finishResponce.ToString());
             }
         }
@@ -91,20 +95,17 @@ namespace Aesc.AwesomeKits.Net.WebStorage
             token = WebRequest.CreateHttp("https://sm.ms/api/v2/token").SendPost(@$"username:{username}
 password: {password}").ReadJsonObject()["data"]["token"].ToString();
         }
+        public SMMSImageHost(string token)
+        {
+            this.token = token;
+        }
         public void Upload(string imageFilepath)
         {
             var httpRequest = WebRequest.CreateHttp("https://sm.ms/api/v2/upload");
             httpRequest.Headers.Add("Authorization", token);
             httpRequest.Timeout = 120000;
-            try
-            {
-                httpRequest.AddFormdata(imageFilepath, "smfile").SendPost().ReadJsonObject();
-            }
-            catch (WebException e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.Status.ToString());
-            }
+            var responce=httpRequest.SetPost().AddFormdata(imageFilepath, "smfile").SendPost().ReadJsonObject();
+            Console.WriteLine(responce.ToString());
         }
     }
     public class QiniuNetdisk : INetdiskUploader
