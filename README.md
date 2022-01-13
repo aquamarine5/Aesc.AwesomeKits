@@ -6,3 +6,4 @@
 [![Release date](https://img.shields.io/github/release-date-pre/awesomehhhhh/Aesc.AwesomeKits)]()
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/awesomehhhhh/Aesc.AwesomeKits.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/awesomehhhhh/Aesc.AwesomeKits/alerts/)
 [![Download count](https://img.shields.io/github/downloads/awesomehhhhh/Aesc.AwesomeKits/total)]()
+![Alt](https://repobeats.axiom.co/api/embed/67418676eefbd592223df06820987e5ae8375421.svg "Repobeats analytics image")
