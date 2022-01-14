@@ -26,9 +26,9 @@ namespace Aesc.AwesomeKits.Net.WebStorage
     {
         public void Download(string data, string filepath);
     }
-    public class Huang1111Netdisk : INetdiskDownloader,INetdiskUploader
+    public class Huang1111Netdisk : INetdiskDownloader, INetdiskUploader
     {
-        string cookies="";
+        string cookies = "";
         public Huang1111Netdisk() { }
         public Huang1111Netdisk(string cookies)
         {
@@ -66,7 +66,7 @@ namespace Aesc.AwesomeKits.Net.WebStorage
                 postWebRequest.Referer = "https://pan.huang1111.cn/home?path=%2F";
                 postWebRequest.UserAgent = defaultUserAgent;
                 postWebRequest.ContentType = "application/octet-stream";
-                string uploadResponce = postWebRequest.SetPost().AddFile(filename).SendPost().ReadText();
+                string uploadResponce = postWebRequest.AddFile(filename).SendPost().ReadText();
                 Console.WriteLine(uploadResponce);
             }
             else
@@ -76,13 +76,13 @@ namespace Aesc.AwesomeKits.Net.WebStorage
                 putWebRequest.ContentType = "application/octet-stream";
                 putWebRequest.UserAgent = defaultUserAgent;
                 putWebRequest.Headers[HttpRequestHeader.ContentRange] = $"bytes 0-{file.Length - 1}/{file.Length}";
-                string uploadResponce = putWebRequest.SetPut().AddFile(filename).SendPut().ReadText();
+                string uploadResponce = putWebRequest.AddFile(filename).SendPut().ReadText();
                 var finishWebRequest = WebRequest.CreateHttp(credentialResponce["token"].ToString());
                 finishWebRequest.UserAgent = defaultUserAgent;
                 finishWebRequest.ContentType = "text/plain;charset=UTF-8";
                 finishWebRequest.Headers[HttpRequestHeader.Cookie] = cookies;
                 finishWebRequest.Referer = "https://pan.huang1111.cn/home?path=%2F";
-                var finishResponce = finishWebRequest.SetPost().AddText(uploadResponce).SendPost().ReadJsonObject();
+                var finishResponce = finishWebRequest.AddText(uploadResponce).SendPost().ReadJsonObject();
                 Console.WriteLine(finishResponce.ToString());
             }
         }
@@ -104,7 +104,7 @@ password: {password}").ReadJsonObject()["data"]["token"].ToString();
             var httpRequest = WebRequest.CreateHttp("https://sm.ms/api/v2/upload");
             httpRequest.Headers.Add("Authorization", token);
             httpRequest.Timeout = 120000;
-            var responce=httpRequest.SetPost().AddFormdata(imageFilepath, "smfile").SendPost().ReadJsonObject();
+            var responce = httpRequest.AddFormdata(imageFilepath, "smfile").SendPost().ReadJsonObject();
             Console.WriteLine(responce.ToString());
         }
     }

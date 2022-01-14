@@ -9,9 +9,9 @@ namespace Aesc.AwesomeKits.Net
     public static class WebRequestExtention
     {
         public static WebResponse SendGet(this HttpWebRequest webRequest) => webRequest.SendRequest("GET");
-        public static WebResponse SendPost(this HttpWebRequest webRequest, string body="") => webRequest.AddText(body).SendRequest("POST");
-        public static WebResponse SendPut(this HttpWebRequest webRequest, string body="") => webRequest.AddText(body).SendRequest("PUT");
-        public static WebResponse SendRequest(this HttpWebRequest webRequest,string method)
+        public static WebResponse SendPost(this HttpWebRequest webRequest, string body = "") => webRequest.AddText(body).SendRequest("POST");
+        public static WebResponse SendPut(this HttpWebRequest webRequest, string body = "") => webRequest.AddText(body).SendRequest("PUT");
+        public static WebResponse SendRequest(this HttpWebRequest webRequest, string method)
         {
             webRequest.Method = method;
             return webRequest.GetResponse();
@@ -19,18 +19,9 @@ namespace Aesc.AwesomeKits.Net
     }
     public static class WebRequestStreamExtention
     {
-        public static HttpWebRequest SetPut(this HttpWebRequest webRequest)
+        public static HttpWebRequest AddText(this HttpWebRequest webRequest, string text, string encoding = "UTF-8")
         {
-            webRequest.Method = "PUT";
-            return webRequest;
-        }
-        public static HttpWebRequest SetPost(this HttpWebRequest webRequest)
-        {
-            webRequest.Method = "POST";
-            return webRequest;
-        }
-        public static HttpWebRequest AddText(this HttpWebRequest webRequest,string text,string encoding="UTF-8")
-        {
+            webRequest.Method = "POST"; // See: https://github.com/awesomehhhhh/Aesc.AwesomeKits/issues/8
             if (text == "") return webRequest;
             var stream = webRequest.GetRequestStream();
             var bytes = Encoding.GetEncoding(encoding).GetBytes(text);
@@ -38,8 +29,9 @@ namespace Aesc.AwesomeKits.Net
             return webRequest;
         }
         // TODO: 完善Formdata
-        public static HttpWebRequest AddFormdata(this HttpWebRequest webRequest,string filePath,string key)
+        public static HttpWebRequest AddFormdata(this HttpWebRequest webRequest, string filePath, string key)
         {
+            webRequest.Method = "POST"; // See: https://github.com/awesomehhhhh/Aesc.AwesomeKits/issues/8
             var boundary = DateTime.Now.Ticks.ToString("x");
             var startBoundary = Encoding.UTF8.GetBytes($"--{boundary}\r\n");
             var endBoundary = Encoding.UTF8.GetBytes($"--{boundary}--\r\n");
@@ -65,8 +57,9 @@ namespace Aesc.AwesomeKits.Net
             stream.CopyTo(webRequest.GetRequestStream());
             return webRequest;
         }
-        public static HttpWebRequest AddFile(this HttpWebRequest webRequest,string filePath)
+        public static HttpWebRequest AddFile(this HttpWebRequest webRequest, string filePath)
         {
+            webRequest.Method = "POST"; // See: https://github.com/awesomehhhhh/Aesc.AwesomeKits/issues/8
             var file = new FileInfo(filePath);
             webRequest.ContentLength = file.Length;
             var stream = webRequest.GetRequestStream();
