@@ -11,8 +11,8 @@ namespace Aesc.AwesomeKits.Examples
     {
         public static void Main(string[] args)
         {
-            var disk = new Huang1111Netdisk();
-            disk.Upload("C:\\Users\\44319\\Downloads\\genshin-gacha-export.zip");
+            var disk = new SMMSImageHost("SeGjnwWvbTZyDRSWfzuq8NFLiRd5SLna");
+            disk.Upload(@"D:\Program Files\Genshin Impact\Genshin Impact Game\ScreenShot\20220113162934.png");
         }
     }
 }

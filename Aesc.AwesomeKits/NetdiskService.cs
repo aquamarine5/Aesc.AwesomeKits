@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Net.Http;
 using Qiniu.Storage;
 using Qiniu.Util;
 using Qiniu.Http;
@@ -55,7 +55,9 @@ namespace Aesc.AwesomeKits.Net.WebStorage
             webRequest.Headers[HttpRequestHeader.Cookie] = cookies;
             webRequest.Referer = "https://pan.huang1111.cn/home?path=%2F";
             webRequest.UserAgent = defaultUserAgent;
+            Console.WriteLine(webRequest.SendGet().ReadJsonObject().ToString());
             var credentialResponce = webRequest.SendGet().ReadJsonObject()["data"];
+            
             string policy = credentialResponce["policy"].ToString();
             if (policy == "")
             {
@@ -104,7 +106,13 @@ password: {password}").ReadJsonObject()["data"]["token"].ToString();
             var httpRequest = WebRequest.CreateHttp("https://sm.ms/api/v2/upload");
             httpRequest.Headers.Add("Authorization", token);
             httpRequest.Timeout = 120000;
-            var responce = httpRequest.AddFormdata(imageFilepath, "smfile").SendPost().ReadJsonObject();
+            var boundary = DateTime.Now.Ticks.ToString("x");
+            MultipartFormDataContent multipartFormData = new MultipartFormDataContent(boundary);
+            FileStream fileStream = new FileStream(imageFilepath, FileMode.Open, FileAccess.Read);
+            StreamContent streamContent = new StreamContent(fileStream);
+            multipartFormData.Add(streamContent, "smfile", Path.GetFileName(imageFilepath));
+            
+            var responce = httpRequest.AddFormdata(multipartFormData,boundary).SendPost().ReadJsonObject();
             Console.WriteLine(responce.ToString());
         }
     }

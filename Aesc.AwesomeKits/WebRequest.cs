@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 
 namespace Aesc.AwesomeKits.Net
@@ -28,33 +29,11 @@ namespace Aesc.AwesomeKits.Net
             stream.Write(bytes);
             return webRequest;
         }
-        // TODO: 完善Formdata
-        public static HttpWebRequest AddFormdata(this HttpWebRequest webRequest, string filePath, string key)
+        public static HttpWebRequest AddFormdata(this HttpWebRequest webRequest,MultipartFormDataContent multipartFormData,string boundary)
         {
             webRequest.Method = "POST"; // See: https://github.com/awesomehhhhh/Aesc.AwesomeKits/issues/8
-            var boundary = DateTime.Now.Ticks.ToString("x");
-            var startBoundary = Encoding.UTF8.GetBytes($"--{boundary}\r\n");
-            var endBoundary = Encoding.UTF8.GetBytes($"--{boundary}--\r\n");
-            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             webRequest.ContentType = $"multipart/form-data; boundary={boundary}";
-            var stream = new MemoryStream();
-            var splitFileContent = Encoding.UTF8.GetBytes(
-                $"Content-Disposition: form-data; name=\"{key}\"; filename=\"{Path.GetFileName(filePath)}\"\r\n" +
-                "Content-Type: image/png\r\n\r\n");
-            stream.Write(startBoundary, 0, startBoundary.Length);
-            stream.Write(splitFileContent, 0, splitFileContent.Length);
-            var fileBuffer = new byte[1024];
-            int totalSize = 0;
-            int size = fileStream.Read(fileBuffer, 0, fileBuffer.Length);
-            while (size > 0)
-            {
-                totalSize += size;
-                stream.Write(fileBuffer, 0, size);
-                size = fileStream.Read(fileBuffer, 0, fileBuffer.Length);
-            }
-            stream.Write(endBoundary, 0, endBoundary.Length);
-            webRequest.ContentLength = stream.Length;
-            stream.CopyTo(webRequest.GetRequestStream());
+            multipartFormData.CopyToAsync(webRequest.GetRequestStream());
             return webRequest;
         }
         public static HttpWebRequest AddFile(this HttpWebRequest webRequest, string filePath)
