@@ -18,7 +18,7 @@ namespace Aesc.AwesomeKits.Net
             return webRequest.GetResponse();
         }
     }
-    public static class WebRequestStreamExtention
+    public static class WebRequestStreamExtension
     {
         public static HttpWebRequest AddText(this HttpWebRequest webRequest, string text, string encoding = "UTF-8")
         {
@@ -29,6 +29,8 @@ namespace Aesc.AwesomeKits.Net
             stream.Write(bytes);
             return webRequest;
         }
+        public static HttpWebRequest AddText(this HttpWebRequest webRequest, string text, Encoding encoding)
+            => webRequest.AddText(text, encoding.BodyName);
         public static HttpWebRequest AddFormdata(this HttpWebRequest webRequest,MultipartFormDataContent multipartFormData,string boundary)
         {
             webRequest.Method = "POST"; // See: https://github.com/awesomehhhhh/Aesc.AwesomeKits/issues/8
@@ -56,7 +58,7 @@ namespace Aesc.AwesomeKits.Net
             return webRequest;
         }
     }
-    public static class WebResponseExtention
+    public static class WebResponseExtension
     {
         public static string ReadText(this WebResponse webResponse)
         {
