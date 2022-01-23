@@ -67,7 +67,8 @@ namespace Aesc.AwesomeKits.Net
             streamReader.Close();
             return result;
         }
-        public static JObject ReadJsonObject(this WebResponse webResponse) => JObject.Parse(webResponse.ReadText());
+        public static JObject ReadJsonObject(this WebResponse webResponse) 
+            => JObject.Parse(webResponse.ReadText());
 
         public static void WriteToFile(this WebResponse webResponse, string filePath)
         {
