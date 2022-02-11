@@ -1,9 +1,9 @@
-﻿using Aesc.AwesomeKits.Util;
+﻿using Aquc.AquaKits.Util;
 using System;
 #pragma warning disable 0649
-namespace Aesc.AwesomeKits.Examples
+namespace Aquc.AquaKits.Examples
 {
-    class ArgsParserExample
+    internal class ArgsParserExample
     {
         /// <summary>
         /// <i>If you want to test this method, please rename this function to "Main"</i><br/><br/>

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using TaskScheduler;
-using Aesc.AwesomeKits.ComUtil;
+using Aquc.AquaKits.ComUtil;
 
-namespace Aesc.AwesomeKits.Examples
+namespace Aquc.AquaKits.Examples
 {
-    class TaskSchedulerExample
+    internal class TaskSchedulerExample
     {
         /// <summary>
         /// <i>If you want to test this method, please rename this function to "Main"</i><br/><br/>

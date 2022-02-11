@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Aesc.AwesomeKits.Util
+namespace Aquc.AquaKits.Util
 {
     public delegate void ParseValueDelegate(FieldInfo field, object obj, object value);
     public class AescArgsParser

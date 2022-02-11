@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 
-namespace Aesc.AwesomeKits.Net
+namespace Aquc.AquaKits.Net
 {
     public static class WebRequestExtention
     {
@@ -22,7 +22,7 @@ namespace Aesc.AwesomeKits.Net
     {
         public static HttpWebRequest AddText(this HttpWebRequest webRequest, string text, string encoding = "UTF-8")
         {
-            webRequest.Method = "POST"; // See: https://github.com/awesomehhhhh/Aesc.AwesomeKits/issues/8
+            webRequest.Method = "POST"; // See: https://github.com/awesomehhhhh/Aquc.AquaKits/issues/8
             if (text == "") return webRequest;
             var stream = webRequest.GetRequestStream();
             var bytes = Encoding.GetEncoding(encoding).GetBytes(text);
@@ -33,14 +33,14 @@ namespace Aesc.AwesomeKits.Net
             => webRequest.AddText(text, encoding.BodyName);
         public static HttpWebRequest AddFormdata(this HttpWebRequest webRequest,MultipartFormDataContent multipartFormData,string boundary)
         {
-            webRequest.Method = "POST"; // See: https://github.com/awesomehhhhh/Aesc.AwesomeKits/issues/8
+            webRequest.Method = "POST"; // See: https://github.com/awesomehhhhh/Aquc.AquaKits/issues/8
             webRequest.ContentType = $"multipart/form-data; boundary={boundary}";
             multipartFormData.CopyToAsync(webRequest.GetRequestStream());
             return webRequest;
         }
         public static HttpWebRequest AddFile(this HttpWebRequest webRequest, string filePath)
         {
-            webRequest.Method = "POST"; // See: https://github.com/awesomehhhhh/Aesc.AwesomeKits/issues/8
+            webRequest.Method = "POST"; // See: https://github.com/awesomehhhhh/Aquc.AquaKits/issues/8
             var file = new FileInfo(filePath);
             webRequest.ContentLength = file.Length;
             var stream = webRequest.GetRequestStream();

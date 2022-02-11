@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Aesc.AwesomeKits.Util;
-using Aesc.AwesomeKits.Net.WebStorage;
-using Aesc.AwesomeKits.Net;
+using Aquc.AquaKits.Util;
+using Aquc.AquaKits.Net.WebStorage;
+using Aquc.AquaKits.Net;
 
-namespace Aesc.AwesomeKits.Examples
+namespace Aquc.AquaKits.Examples
 {
-    class NetdiskServiceExample
+    /// <summary>
+    /// <i>If you want to test this method, please rename this function to "Main"</i><br/><br/>
+    /// Seealso: <seealso cref="AescTaskScheduler"/>
+    /// </summary>
+    internal class NetdiskServiceExample
     {
-        public static void Main(string[] args)
+        public static void NetdiskServiceMain(string[] args)
         {
             var disk = new SMMSImageHost("SeGjnwWvbTZyDRSWfzuq8NFLiRd5SLna");
             disk.Upload(@"D:\Program Files\Genshin Impact\Genshin Impact Game\ScreenShot\20220113162934.png");

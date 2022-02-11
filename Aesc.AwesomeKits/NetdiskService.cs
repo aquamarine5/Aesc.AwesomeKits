@@ -8,7 +8,7 @@ using System.IO;
 using System.Net;
 using Newtonsoft.Json.Linq;
 
-namespace Aesc.AwesomeKits.Net.WebStorage
+namespace Aquc.AquaKits.Net.WebStorage
 {
     public interface IMessageProvider
     {
