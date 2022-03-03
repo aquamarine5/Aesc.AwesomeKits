@@ -1,10 +1,8 @@
 name: .NET
 
 on:
-  #push:
-  #  branches: [ main ]
-  # Disable action until fixed this problem of COM Reference disabled in Github Action machine.
-  # "No pr,yet?"
+  push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -18,7 +16,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.0
+        dotnet-version: 5.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
